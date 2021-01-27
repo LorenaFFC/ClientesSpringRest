@@ -1,9 +1,18 @@
 package com.ordemservico.osworks.domain.model;
 
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.ordemservico.osworks.domain.service.ValidationGroups;
+
 import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.Objects;
 
 @Entity
@@ -12,14 +21,26 @@ public class OrdemServico {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Valid
+    @ConvertGroup(from = Default.class , to = ValidationGroups.ClienteId.class)
+    @NotNull
     @ManyToOne
     private Cliente cliente;
+    @NotBlank
     private String descricao;
+    @NotNull
     private BigDecimal preco;
+
     @Enumerated(EnumType.STRING)  // MOSTRA A PALAVRA "FINALIZADA E NAO O ID
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private StatusOrdemServico status;
-    private LocalDateTime dataAbertura;
-    private LocalDateTime dataFinalizacao;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY) // NAO DEIXAA PREENCHER
+    private OffsetDateTime dataAbertura;
+
+    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+    private OffsetDateTime dataFinalizacao;
 
     public Long getId() {
         return id;
@@ -61,19 +82,19 @@ public class OrdemServico {
         this.status = status;
     }
 
-    public LocalDateTime getDataFinalizacao() {
+    public OffsetDateTime getDataFinalizacao() {
         return dataFinalizacao;
     }
 
-    public void setDataFinalizacao(LocalDateTime dataFinalizacao) {
+    public void setDataFinalizacao(OffsetDateTime dataFinalizacao) {
         this.dataFinalizacao = dataFinalizacao;
     }
 
-    public LocalDateTime getDataAbertura() {
+    public OffsetDateTime getDataAbertura() {
         return dataAbertura;
     }
 
-    public void setDataAbertura(LocalDateTime dataAbertura) {
+    public void setDataAbertura(OffsetDateTime dataAbertura) {
         this.dataAbertura = dataAbertura;
     }
 

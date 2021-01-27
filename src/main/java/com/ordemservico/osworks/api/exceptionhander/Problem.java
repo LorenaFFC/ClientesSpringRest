@@ -3,12 +3,13 @@ package com.ordemservico.osworks.api.exceptionhander;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Problem {
     private Integer status;
-    private LocalDateTime dataHora;
+    private OffsetDateTime dataHora;
     private String titulo;
     private List<Campo> campos;
 
@@ -46,11 +47,11 @@ public class Problem {
         this.status = status;
     }
 
-    public LocalDateTime getDataHora() {
+    public OffsetDateTime getDataHora() {
         return dataHora;
     }
 
-    public void setDataHora(LocalDateTime dataHora) {
+    public void setDataHora(OffsetDateTime dataHora) {
         this.dataHora = dataHora;
     }
 
